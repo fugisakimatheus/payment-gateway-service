@@ -1,0 +1,54 @@
+// Configs
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Models
+model Acesso {
+  id         Int       @id @unique @default(autoincrement())
+  nome       String
+  login      String    @unique
+  access_key String    @unique
+  status     String?   @default("ativado")
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
+  arquivado  Boolean?  @default(false)
+  pedidos    Pedido[]
+
+  @@map("acessos")
+}
+
+model MetodoPagamento {
+  id         Int       @id @unique @default(autoincrement())
+  nome       String
+  tipo       String
+  status     String?   @default("ativado")
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
+  arquivado  Boolean?  @default(false)
+  Pedido     Pedido[]
+
+  @@map("metodos_pagamento")
+}
+
+model Pedido {
+  id                  Int             @id @unique @default(autoincrement())
+  id_transacao        Int?
+  id_cliente          Int?
+  total               Float
+  status              String?         @default("finalizado")
+  id_acesso           Int
+  id_metodo_pagamento Int
+  created_at          DateTime?       @default(now())
+  updated_at          DateTime?       @updatedAt
+  arquivado           Boolean?        @default(false)
+  acesso              Acesso          @relation(fields: [id_acesso], references: [id])
+  metodo_pagamento    MetodoPagamento @relation(fields: [id_metodo_pagamento], references: [id])
+
+  @@map("pedidos")
+}

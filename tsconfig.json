@@ -1,0 +1,55 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": [
+      "esnext"
+    ],
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "data/*": [
+        "./src/data/*"
+      ],
+      "domain/*": [
+        "./src/domain/*"
+      ],
+      "infra/*": [
+        "./src/infra/*"
+      ],
+      "presentation/*": [
+        "./src/presentation/*"
+      ],
+      "utils/*": [
+        "./src/utils/*"
+      ],
+      "tests/*": [
+        "./src/tests/*"
+      ]
+    },
+    "types": [
+      "node",
+      "jest"
+    ],
+    "checkJs": false,
+    "allowJs": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "plugins": [
+      {
+        "transform": "ts-auto-mock/transformer",
+        "cacheBetweenTests": false
+      }
+    ]
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "jest.config.js",
+    "jest.setup.ts"
+  ]
+}
