@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt'
 import { StatusError } from 'data/errors'
 import { acessoRepository } from 'data/repositories/acesso-repository'
 import { BaseRequestBody } from 'domain/requests'
@@ -9,6 +10,7 @@ export class AutenticationAccessKeyValidator {
     _response: Response,
     next: NextFunction,
   ) {
+    const login = request.headers.login as string
     const access_key = request.headers.accesskey as string
 
     if (!access_key) {
@@ -16,10 +18,17 @@ export class AutenticationAccessKeyValidator {
       return
     }
 
-    const acesso = await acessoRepository.findFirst({ where: { access_key } })
+    const acesso = await acessoRepository.findFirst({ where: { login } })
 
     if (!acesso) {
       StatusError.throw('Acesso não encontrado', 'NOT_FOUND')
+      return
+    }
+
+    const isValidAcessKey = await bcrypt.compare(access_key, acesso.access_key)
+
+    if (!isValidAcessKey) {
+      StatusError.throw('Chave de acesso inválida inválida', 'BAD_REQUEST')
       return
     }
 
