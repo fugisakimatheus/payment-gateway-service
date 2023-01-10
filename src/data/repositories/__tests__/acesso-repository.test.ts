@@ -1,3 +1,5 @@
+import { EntityStatus } from 'domain/enums'
+
 import { acessoRepository } from '../acesso-repository'
 
 describe('Tests - Acesso Repository', () => {
@@ -9,7 +11,7 @@ describe('Tests - Acesso Repository', () => {
     const acesso = {
       nome: 'Acesso 1',
       login: 'teste',
-      status: 'ativado',
+      status: EntityStatus.ATIVADO,
       arquivado: false,
     }
 

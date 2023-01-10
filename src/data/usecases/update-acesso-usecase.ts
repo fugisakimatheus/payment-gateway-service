@@ -12,7 +12,7 @@ export class UpdateAcessoUseCase implements IUpdateAcessoUseCase {
     try {
       const { id, ...data } = params
       if (data.access_key) {
-        data.access_key = await bcrypt.hash(data.access_key as string, 32)
+        data.access_key = await bcrypt.hash(data.access_key as string, 16)
       }
       const acesso = await acessoRepository.update(id, data)
       acesso.access_key = undefined

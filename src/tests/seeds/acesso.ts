@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import { prisma } from '../../infra/database/prisma'
 
 export const handleSeedAcessos = async () => {
-  const acesso1 = await bcrypt.hash('acesso1', 32)
+  const acesso1 = await bcrypt.hash('acesso1', 16)
   await prisma.acesso.create({
     data: {
       nome: 'Acesso 1',
@@ -12,7 +12,7 @@ export const handleSeedAcessos = async () => {
     },
   })
 
-  const joao123 = await bcrypt.hash('joao123', 32)
+  const joao123 = await bcrypt.hash('joao123', 16)
 
   await prisma.acesso.create({
     data: {

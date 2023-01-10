@@ -10,7 +10,7 @@ import {
 export class CreateAcessoUseCase implements ICreateAcessoUseCase {
   async handle(params: CreateAcessoParams): Promise<Acesso> {
     try {
-      const chaveAcessoCriptografada = await bcrypt.hash(params.access_key, 32)
+      const chaveAcessoCriptografada = await bcrypt.hash(params.access_key, 16)
       const acesso = await acessoRepository.create({
         ...params,
         access_key: chaveAcessoCriptografada,
