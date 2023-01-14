@@ -6,7 +6,7 @@ export interface StatusErrorThrow {
 }
 
 export class StatusError {
-  static throw(message: string, status: keyof typeof HttpStatus) {
+  static throw(message: any, status: keyof typeof HttpStatus) {
     throw { message, status: HttpStatus[status] }
   }
 }

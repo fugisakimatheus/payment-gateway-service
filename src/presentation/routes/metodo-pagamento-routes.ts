@@ -4,8 +4,11 @@ import { GetMetodosPagamentoController } from 'presentation/controllers/get-meto
 import { UpdateMetodoPagamentoController } from 'presentation/controllers/update-metodo-pagamento-controller'
 import { AutenticationAccessKeyValidator } from 'presentation/middlewares/authentication'
 import { UpdateMetodoPagamentoValidator } from 'presentation/middlewares/validators/update-metodo-pagamento-validator'
+import { getRouteRequestsLimiterByMinutes } from 'utils/limiter'
 
 const router = express.Router()
+
+const routeRequestsLimiter = getRouteRequestsLimiterByMinutes(6, 18)
 
 router.get(
   '/paginado',
@@ -15,12 +18,14 @@ router.get(
 
 router.post(
   '/create',
+  routeRequestsLimiter,
   AutenticationAccessKeyValidator.handle,
   CreateMetodoPagamentoController.handle,
 )
 
 router.put(
   '/update',
+  routeRequestsLimiter,
   AutenticationAccessKeyValidator.handle,
   UpdateMetodoPagamentoValidator.handle,
   UpdateMetodoPagamentoController.handle,
